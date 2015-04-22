@@ -1,0 +1,22 @@
+{
+    "name": "laravel/processor",
+    "keywords": ["processor"],
+    "description": "A package process POST requests",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lito",
+            "email": "lito@eordes.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "form-manager/form-manager": "4.3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravel\\Processor\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

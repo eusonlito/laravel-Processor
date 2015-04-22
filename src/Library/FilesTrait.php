@@ -1,0 +1,97 @@
+<?php
+
+namespace Laravel\Processor\Library;
+
+use Input;
+use Request;
+
+trait FilesTrait
+{
+    public static function saveFormFiles($form, &$data, $folder)
+    {
+        foreach ($form as $name => $input) {
+            if ($input->attr('type') !== 'file') {
+                continue;
+            }
+
+            if ($file = Input::file($name)) {
+                $data[$name] = self::saveFile($file, $folder.'/'.$name);
+            } elseif (array_key_exists($name, $data)) {
+                unset($data[$name]);
+            }
+        }
+
+        return $data;
+    }
+
+    public static function saveFormFilesName($name, $folder)
+    {
+        $files = array_filter(Input::file($name));
+
+        if (empty($files)) {
+            return [];
+        }
+
+        $data = [];
+
+        foreach ($files as $file) {
+            $data[] = self::saveFile($file, $folder);
+        }
+
+        return array_values(array_filter($data));
+    }
+
+    public static function securePath($path)
+    {
+        return preg_replace('/(\\|\/\.{2,}\/)/', '', $path);
+    }
+
+    public static function saveFile($file, $folder)
+    {
+        $storage = public_path('storage/resources/'.self::securePath($folder));
+
+        if (!is_dir($storage)) {
+            mkdir($storage, 0755, true);
+        }
+
+        if (is_object($file)) {
+            $name = strtolower($file->getClientOriginalName());
+        } else {
+            $name = strtolower(basename($file));
+        }
+
+        $name = preg_replace('/[^\w\.]/', '-', $name);
+        $name = preg_replace('/\-+/', '-', $name);
+        $name = substr(uniqid(), 2, 8).'-'.$name;
+
+        copy($file, $storage.'/'.$name);
+
+        return $folder.'/'.$name;
+    }
+
+    public static function deleteOldFiles($form, $model)
+    {
+        foreach ($form as $name => $input) {
+            if ($input->attr('type') !== 'file') {
+                continue;
+            }
+
+            $value = $input->val();
+
+            if (is_array($value) && !empty($value['name']) && $model->$name) {
+                self::deleteFile($model->$name);
+            }
+        }
+    }
+
+    protected static function deleteFile($file)
+    {
+        $file = public_path('storage/resources/'.self::securePath($file));
+
+        if (is_file($file)) {
+            return unlink($file);
+        }
+
+        return true;
+    }
+}
