@@ -43,6 +43,7 @@ class Users extends Controller
         }
 
         // https://github.com/eusonlito/laravel-Meta
+        // https://github.com/oscarotero/Gettext
         Meta::meta('title', __('Login as User'));
 
         return view('web.pages.users.login', [
