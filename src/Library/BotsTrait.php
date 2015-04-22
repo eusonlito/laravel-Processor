@@ -5,7 +5,7 @@ namespace Laravel\Processor\Library;
 use Input;
 use Request;
 
-trait BotTrait
+trait BotsTrait
 {
     protected static $fake_fields = ['fake_email', 'fake_url'];
 

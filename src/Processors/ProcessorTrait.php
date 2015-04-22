@@ -8,9 +8,9 @@ use Exception;
 use Input;
 use Request;
 
-trait Processor
+trait ProcessorTrait
 {
-    use Library\BotTrait, Library\FilesTrait;
+    use Library\BotsTrait, Library\FilesTrait;
 
     protected function check($function, $form = null)
     {
