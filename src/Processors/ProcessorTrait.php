@@ -16,8 +16,10 @@ trait ProcessorTrait
     {
         $post = Input::all();
 
-        if (empty($post['_processor']) || ($post['_processor'] !== $function)) {
-            return;
+        if (empty($post['_processor'])
+        || (is_string($function) && ($post['_processor'] !== $function))
+        || (is_array($function) && !in_array($post['_processor'], $function, true))) {
+            return null;
         }
 
         if (self::isFake($post, $form)) {
