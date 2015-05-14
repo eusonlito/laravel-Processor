@@ -35,6 +35,10 @@ trait ProcessorTrait
             return in_array($_processor, $processor, true) ? $_processor : null;
         }
 
+        if ($processor === 'AUTO') {
+            return $_processor;
+        }
+
         return ($processor === $_processor) ? $_processor : null;
     }
 
