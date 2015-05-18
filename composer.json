@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Eusonlito\\Laravel\\Processor\\": "src/"
+            "Eusonlito\\LaravelProcessor\\": "src/"
         }
     },
     "minimum-stability": "stable"
