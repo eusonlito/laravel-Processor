@@ -8,7 +8,7 @@ using composer
 
 ```
 "require": {
-    "laravel/processor": "0.*"
+    "eusonlito/laravel-processor": "0.*"
 }
 ```
 
@@ -18,7 +18,7 @@ using composer
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use Laravel\Processor\Controllers\ProcessorTrait;
+use Eusonlito\LaravelProcessor\Controllers\ProcessorTrait;
 
 abstract class Controller extends BaseController
 {
@@ -91,7 +91,7 @@ class Login extends F
 ```php
 namespace App\Http\Processors;
 
-use Laravel\Processor\Processors\ProcessorTrait;
+use Eusonlito\LaravelProcessor\Processors\ProcessorTrait;
 
 abstract Processor
 {

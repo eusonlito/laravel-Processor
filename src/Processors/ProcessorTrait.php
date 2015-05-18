@@ -1,8 +1,7 @@
 <?php
+namespace Eusonlito\LaravelProcessor\Processors;
 
-namespace Laravel\Processor\Processors;
-
-use Laravel\Processor\Library;
+use Eusonlito\LaravelProcessor\Library;
 
 use Exception;
 use Input;

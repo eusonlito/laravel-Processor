@@ -1,6 +1,5 @@
 <?php
-
-namespace Laravel\Processor\Controllers;
+namespace Eusonlito\LaravelProcessor\Controllers;
 
 use Exception;
 use App;

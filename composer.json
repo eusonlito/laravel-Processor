@@ -1,5 +1,5 @@
 {
-    "name": "laravel/processor",
+    "name": "eusonlito/laravel-processor",
     "keywords": ["processor"],
     "description": "A package process POST requests",
     "license": "MIT",
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Laravel\\Processor\\": "src/"
+            "Eusonlito\\Laravel\\Processor\\": "src/"
         }
     },
     "minimum-stability": "stable"

@@ -1,6 +1,5 @@
 <?php
-
-namespace Laravel\Processor\Library;
+namespace Eusonlito\LaravelProcessor\Library;
 
 use Input;
 use Request;
