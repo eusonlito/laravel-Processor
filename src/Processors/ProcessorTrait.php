@@ -7,6 +7,9 @@ use Exception;
 use Input;
 use Request;
 
+use FormManager\Containers\Collection;
+use FormManager\Containers\Group;
+
 trait ProcessorTrait
 {
     use Library\BotsTrait, Library\FilesTrait;
@@ -34,15 +37,7 @@ trait ProcessorTrait
         $form->loadFromGlobals();
 
         if ($form->isValid() !== true) {
-            $errors = [];
-
-            foreach ($form as $input) {
-                if ($input->error()) {
-                    $errors[] = ($input->label() ?: $input->attr('placeholder')).': '.$input->error();
-                }
-            }
-
-            throw new Exception('<p>'.implode('</p><p>', $errors).'</p>');
+            throw new Exception('<p>'.implode('</p><p>', self::formErrors($form)).'</p>');
         }
 
         $data = $form->val();
@@ -50,5 +45,22 @@ trait ProcessorTrait
         unset($data['_processor'], $data['_token'], $data['created_at'], $data['updated_at']);
 
         return $data;
+    }
+
+    private static function formErrors($form)
+    {
+        $errors = [];
+
+        foreach ($form as $input) {
+            if ($input instanceof Collection) {
+                $errors = array_merge($errors, self::FormErrors($input->template));
+            } elseif ($input instanceof Group) {
+                $errors = array_merge($errors, self::FormErrors($input));
+            } elseif ($error = $input->error()) {
+                $errors[] = (isset($input->label) ? $input->label : $input->attr('placeholder')).': '.$error;
+            }
+        }
+
+        return $errors;
     }
 }
