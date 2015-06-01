@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.3",
-        "form-manager/form-manager": "4.3.*"
+        "form-manager/form-manager": "4.4.*"
     },
     "autoload": {
         "psr-4": {
