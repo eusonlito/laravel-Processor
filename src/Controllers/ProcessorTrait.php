@@ -26,7 +26,7 @@ trait ProcessorTrait
 
     protected function checkProcessor($processor)
     {
-        if (!Request::isMethod('post') || empty($_processor = Input::get('_processor'))) {
+        if (!Request::isMethod('post') || !($_processor = Input::get('_processor'))) {
             return;
         }
 
