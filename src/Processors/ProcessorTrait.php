@@ -61,6 +61,6 @@ trait ProcessorTrait
             }
         }
 
-        return $errors;
+        return array_map('strip_tags', $errors);
     }
 }
