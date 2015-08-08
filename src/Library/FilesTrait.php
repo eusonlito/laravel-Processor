@@ -47,7 +47,8 @@ trait FilesTrait
 
     public static function saveFile($file, $folder)
     {
-        $storage = public_path('storage/resources/'.self::securePath($folder));
+        $folder = strtolower(self::securePath($folder));
+        $storage = self::getStoragePath($folder);
 
         if (!is_dir($storage)) {
             mkdir($storage, 0755, true);
@@ -85,12 +86,17 @@ trait FilesTrait
 
     protected static function deleteFile($file)
     {
-        $file = public_path('storage/resources/'.self::securePath($file));
+        $file = self::getStoragePath(self::securePath($file));
 
         if (is_file($file)) {
             return unlink($file);
         }
 
         return true;
+    }
+
+    protected static function getStoragePath($file)
+    {
+        return public_path('storage/resources/'.$file);
     }
 }
