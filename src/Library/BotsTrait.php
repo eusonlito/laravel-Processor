@@ -6,7 +6,7 @@ use Request;
 
 trait BotsTrait
 {
-    protected static $bots = __DIR__.'/resources/bots.txt';
+    protected static $bots = __DIR__.'/../resources/bots.txt';
     protected static $fake_fields = ['fake_email', 'fake_url'];
 
     protected static function isFake($post, $form)
