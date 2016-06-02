@@ -26,11 +26,11 @@ trait BotsTrait
 
     protected static function isBot(array $data = [], array $fake = [])
     {
-        $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-
-        foreach (file(self::$bots, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $bot) {
-            if (preg_match('#'.preg_quote($bot, '#').'#i')) {
-                return true;
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            foreach (file(self::$bots, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $bot) {
+                if (preg_match('#'.preg_quote($bot, '#').'#', $_SERVER['HTTP_USER_AGENT'])) {
+                    return true;
+                }
             }
         }
 
