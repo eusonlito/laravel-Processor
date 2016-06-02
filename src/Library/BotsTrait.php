@@ -6,6 +6,7 @@ use Request;
 
 trait BotsTrait
 {
+    protected static $bots = __DIR__.'/resources/bots.txt';
     protected static $fake_fields = ['fake_email', 'fake_url'];
 
     protected static function isFake($post, $form)
@@ -25,19 +26,10 @@ trait BotsTrait
 
     protected static function isBot(array $data = [], array $fake = [])
     {
-        $bots = [
-            'ask jeeves','baiduspider','butterfly','fast','feedfetcher-google','firefly','gigabot',
-            'googlebot','infoseek','me.dium','mediapartners-google','nationaldirectory','rankivabot',
-            'scooter','slurp','sogou web spider','spade','tecnoseek','technoratisnoop','teoma',
-            'tweetmemebot','twiceler','twitturls','url_spider_sql','webalta crawler','webbug',
-            'webfindbot','zyborg','alexa','appie','crawler','froogle','girafabot','inktomi',
-            'looksmart','msnbot','rabaz','www.galaxy.com','rogerbot',
-        ];
-
         $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 
-        foreach ($bots as $bot) {
-            if (strstr($agent, $bot) !== false) {
+        foreach (file(self::$bots, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $bot) {
+            if (preg_match('#'.preg_quote($bot, '#').'#i')) {
                 return true;
             }
         }
