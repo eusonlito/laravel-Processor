@@ -45,7 +45,7 @@ trait FilesTrait
         return preg_replace('/(\\|\/\.{2,}\/)/', '', $path);
     }
 
-    public static function saveFile($file, $folder)
+    public static function saveFile($file, $folder, $name = null)
     {
         $folder = strtolower(self::securePath($folder));
         $storage = self::getStoragePath($folder);
@@ -55,12 +55,12 @@ trait FilesTrait
         }
 
         if (is_object($file)) {
-            $name = strtolower($file->getClientOriginalName());
-        } else {
-            $name = strtolower(basename($file));
+            $name = $file->getClientOriginalName();
+        } elseif (empty($name)) {
+            $name = basename($file);
         }
 
-        $name = preg_replace('/[^\w\.]/', '-', $name);
+        $name = preg_replace('/[^\w\.]/', '-', strtolower($name));
         $name = preg_replace('/\-+/', '-', $name);
         $name = substr(uniqid(), 2, 8).'-'.$name;
 
@@ -95,8 +95,13 @@ trait FilesTrait
         return true;
     }
 
+    protected static function getRelativeStoragePath($file)
+    {
+        return 'storage/resources/'.$file;
+    }
+
     protected static function getStoragePath($file)
     {
-        return public_path('storage/resources/'.$file);
+        return public_path(self::getRelativeStoragePath($file));
     }
 }
