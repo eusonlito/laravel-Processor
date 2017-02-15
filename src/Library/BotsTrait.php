@@ -6,7 +6,7 @@ use Request;
 
 trait BotsTrait
 {
-    protected static $bots = __DIR__.'/../resources/bots.txt';
+    protected static $bots = '../resources/bots.txt';
     protected static $fake_fields = ['fake_email', 'fake_url'];
 
     protected static function isFake($post, $form)
@@ -27,7 +27,9 @@ trait BotsTrait
     protected static function isBot(array $data = [], array $fake = [])
     {
         if (isset($_SERVER['HTTP_USER_AGENT'])) {
-            foreach (file(self::$bots, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $bot) {
+            $list = file(__DIR__.'/'.self::$bots, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+            foreach ($list as $bot) {
                 if (preg_match('#'.preg_quote($bot, '#').'#', $_SERVER['HTTP_USER_AGENT'])) {
                     return true;
                 }
