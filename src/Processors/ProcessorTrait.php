@@ -4,7 +4,6 @@ namespace Eusonlito\LaravelProcessor\Processors;
 use Eusonlito\LaravelProcessor\Library;
 
 use Exception;
-use Input;
 use Request;
 
 use FormManager\Containers\Collection;
@@ -16,7 +15,7 @@ trait ProcessorTrait
 
     protected function check($function, $form = null)
     {
-        $post = Input::all();
+        $post = request()->input();
 
         if (empty($post['_processor'])
         || (is_string($function) && ($post['_processor'] !== $function))

@@ -1,7 +1,6 @@
 <?php
 namespace Eusonlito\LaravelProcessor\Library;
 
-use Input;
 use Request;
 
 trait BotsTrait

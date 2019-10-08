@@ -3,7 +3,6 @@ namespace Eusonlito\LaravelProcessor\Controllers;
 
 use Exception;
 use App;
-use Input;
 use Request;
 use Response;
 use Session;
@@ -26,7 +25,7 @@ trait ProcessorTrait
 
     protected function checkProcessor($processor)
     {
-        if (!Request::isMethod('post') || !($_processor = Input::get('_processor'))) {
+        if (!Request::isMethod('post') || !($_processor = request()->input('_processor'))) {
             return;
         }
 

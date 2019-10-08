@@ -1,7 +1,6 @@
 <?php
 namespace Eusonlito\LaravelProcessor\Library;
 
-use Input;
 use Request;
 
 trait FilesTrait
@@ -13,7 +12,7 @@ trait FilesTrait
                 continue;
             }
 
-            if ($file = Input::file($name)) {
+            if ($file = request()->file($name)) {
                 $data[$name] = self::saveFile($file, $folder.'/'.$name);
             } elseif (array_key_exists($name, $data)) {
                 unset($data[$name]);
@@ -25,7 +24,7 @@ trait FilesTrait
 
     public static function saveFormFilesName($name, $folder)
     {
-        $files = array_filter(Input::file($name));
+        $files = array_filter(request()->file($name));
 
         if (empty($files)) {
             return [];
